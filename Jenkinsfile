@@ -1,9 +1,6 @@
 pipeline{
     agent any
-      environment {
-        STACK_NAME = 'sam-app-beta-stage'
-        S3_BUCKET = 'sam-jenkins-demo-us-west-2-user1'
-      }  
+ 
     stages {
         stage('checkout') {
              steps { 
