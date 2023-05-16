@@ -1,8 +1,9 @@
 pipeline{
     agent any
-    environment {
-        NEWRELIC_API_KEY = credentials('aws')
-    }    
+      environment {
+        STACK_NAME = 'sam-app-beta-stage'
+        S3_BUCKET = 'sam-jenkins-demo-us-west-2-user1'
+      }  
     stages {
         stage('checkout') {
              steps { 
@@ -11,12 +12,16 @@ pipeline{
         }
         stage('tf init')  {
             steps {
+                    withAWS(credentials: 'aws', region: 'us-east-2') {
                     sh 'terraform init'
+                    }
             }
         }
         stage('tf apply')  {
-            steps { 
+            steps {
+                withAWS(credentials: 'aws', region: 'us-east-2'){
                 sh 'terraform apply --auto-approve'
+                }
             }
         }
     }
