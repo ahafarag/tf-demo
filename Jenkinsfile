@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment {
+        NEWRELIC_API_KEY = credentials('aws')
+    }    
     stages {
         stage('checkout') {
              steps { 
